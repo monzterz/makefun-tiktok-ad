@@ -36,9 +36,23 @@ badge overlay sits at x=120, y=272 from the first frame until the end card, at 1
 | 5 | 3.1 | call to action |
 | end card | 2.5 | referral card, code typed in |
 
-19.0 s total, 1080x1920, 30 fps, H.264 High, no audio. Each slide holds a 1.0 to 1.045 slow
-push-in so the frame is never dead, and hard cuts keep the pace TikTok-native. The lower third is
-left clear for TikTok's own caption and buttons.
+19.0 s total, 1080x1920, 30 fps, H.264 High. Each slide holds a 1.0 to 1.045 slow push-in so the
+frame is never dead, and hard cuts keep the pace TikTok-native. The lower third is left clear for
+TikTok's own caption and buttons.
+
+## The music
+
+`ad/music.py` synthesizes the bed from arithmetic, so the posted video carries no third-party
+audio and cannot be muted or claimed: 120 bpm in A minor, a kick and closed hats under the five
+slides, a sub bass and a pad that move one chord a slide (Am, F, C, G, Am), a noise swell into
+each cut, and the drums out when the end card comes in at 16.5 s. Standard library only; the
+master sits at about -20 dB RMS with 1 dB of headroom.
+
+```sh
+python3 ad/build_ad.py --code <referral code> --out ad.mp4
+python3 ad/music.py --out bed.wav
+ffmpeg -i ad.mp4 -i bed.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest ad-music.mp4
+```
 
 ## Render
 
