@@ -1,0 +1,6 @@
+out/
+*.mp4
+first.png
+last.png
+frame-*.png
+__pycache__/
